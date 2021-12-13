@@ -1,58 +1,46 @@
 import React from 'react';
 
-class button extends React.Component {
+class Button extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { num: 0, color: 'black' };
+    this.state = { number: 0, color: 'black' };
   }
-  click() {
-    this.setState({ div: !this.state.num });
-  }
+  increase = () => {
+    if (this.state.number < 10) {
+      this.setState({ number: this.state.number + 1 });
+      this.changecolor(this.state.number);
+    }
+  };
+  decrease = () => {
+    if (this.state.number > -10) {
+      this.setState({ number: this.state.number - 1 });
+      this.changecolor(this.state.number);
+    }
+  };
+  changecolor = (value) => {
+    if (value > 0) {
+      this.setState({ color: 'green' });
+    } else if (value < 0) {
+      this.setState({ color: 'red' });
+    } else this.setState({ color: 'black' });
+  };
   render() {
     return (
       <div>
-        <button
-          className="plus"
-          onClick={() => {
-            if (this.state.num < 10) {
-              let newNum = this.state.num + 1;
-              this.setState({ num: newNum });
-              if (this.state.num < 10 && this.state.num >= -1) {
-                this.state.color = 'green';
-                if (this.state.num === 0) this.state.color = 'black';
-              }
-            }
-          }}
-        >
-          plus
+        <button className="plus" onClick={this.increase}>
+          Increase
         </button>
-
         <input
           type="text"
-          value={this.state.num}
+          value={this.state.number}
           style={{ color: `${this.state.color}` }}
         ></input>
-
-        <button
-          className="minus"
-          onClick={() => {
-            if (this.state.num > -10) {
-              let newNum = this.state.num - 1;
-              this.setState({ num: newNum });
-              if (this.state.num > -10 && this.state.num <= 1) {
-                this.state.color = 'red';
-                if (this.state.num === 0) this.state.color = 'black';
-              }
-            }
-          }}
-        >
-          minus
+        <button className="minus" onClick={this.decrease}>
+          Decrease
         </button>
-
-        {this.state.div && <div className="box"></div>}
       </div>
     );
   }
 }
 
-export default button;
+export default Button;

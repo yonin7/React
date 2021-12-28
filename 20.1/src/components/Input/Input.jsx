@@ -6,19 +6,23 @@ function Input() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        try {
-            const controller = new AbortController();
-            const movieAPI = async () => {
-          const res = await axios.get('https://randomuser.me/api/?results=1000',{
-            signal: controller.signal})
-            setData(res);
-         };
+      const controller = new AbortController();    
+      const movieAPI = async () => {
+        try{
+            const res = await axios.get('https://randomuser.me/api/?results=1000',{
+            signal: controller.signal}
+            )
+            console.log(res.data.results);
+            setData(res.data.results);
+          } catch(e){return e.errorMessage}
+      }
+        
       movieAPI();
       setData(data);
       return()=>{
-          controller.abrot()
-      }}
-      catch(e){return e.errorMessage}
+        controller.abrot()
+        }
+
     }, []);
   
     const convertData = () => {
